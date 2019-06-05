@@ -1,12 +1,16 @@
-import GameplayKit
+import Foundation
 
-extension Int {
+func randomNumber(MIN: Int, MAX: Int)-> Int{
+    return Int(arc4random_uniform(UInt32(MAX-MIN)) + UInt32(MIN));
+}
+
+/*extension Int {
     static func random(min: Int, max: Int) -> Int {
         precondition(min <= max)
         let randomizer = GKRandomSource.sharedRandom()
         return min + randomizer.nextInt(upperBound: max - min + 1)
     }
-}
+}*/
 
 func getAverages() -> Int{
     var AvgProb = 0
@@ -19,20 +23,20 @@ func getAverages() -> Int{
     if firstTeamAvg > secondTeamAvg{
         let firstTeamDiff = firstTeamAvg - secondTeamAvg
         for _ in 0...firstTeamDiff{
-            AvgProb += Int.random(min: 1, max: 6)
+            AvgProb += randomNumber(MIN: 0, MAX: 7)
         }
     }
     
     if firstTeamAvg < secondTeamAvg{
         let secondTeamDiff = secondTeamAvg - firstTeamAvg
         for _ in 0...secondTeamDiff{
-            AvgProb += Int.random(min: -6, max: -1)
+            AvgProb += randomNumber(MIN: -7, MAX: 0)
         }
     }
 
     if firstTeamAvg == secondTeamAvg{
         for _ in 0...firstTeamAvg{
-            AvgProb += Int.random(min: -2, max: 2)
+            AvgProb += randomNumber(MIN: -3, MAX: 3)
         }
     }
     return AvgProb
@@ -47,7 +51,7 @@ func scoreGoal(firstProb:Int, secProb:Int) -> Bool{
 }
 
 func scorer() -> String{
-    let select = Int.random(min: 0, max: 100) 
+    let select = randomNumber(MIN: -1, MAX: 101)
     if select == 2{return "Player2"}
     if select > 2 && select < 5{return "Player3"}
     if select > 4 && select < 9{return "Player4"}
@@ -98,8 +102,8 @@ func match(){
     for minutes in 0...gameEnd{
         goalScored = false
         if prob>0{ //First advantage
-            firstProb = Int.random(min: 0, max: 40)
-            secProb = Int.random(min: 0, max: 40)
+            firstProb = randomNumber(MIN: 0, MAX: 41)
+            secProb = randomNumber(MIN: 0, MAX: 41)
             goalScored = scoreGoal(firstProb:firstProb, secProb:secProb)
             if goalScored == true{
                 prob+=10
@@ -112,8 +116,8 @@ func match(){
             }
         }
         if prob<0{ //Advantage second
-            firstProb = Int.random(min: 0, max: 40)
-            secProb = Int.random(min: 0, max: 40)
+            firstProb = randomNumber(MIN: 0, MAX: 41)
+            secProb = randomNumber(MIN: 0, MAX: 41)
             goalScored = scoreGoal(firstProb:firstProb, secProb:secProb)
             if goalScored == true{
                 prob-=10
@@ -126,7 +130,7 @@ func match(){
             }
         }
         if prob == 0{
-            prob += Int.random(min: -5, max: 5)            
+            prob += randomNumber(MIN: -6, MAX: 6)          
         }
     }
     print("")
