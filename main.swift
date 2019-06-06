@@ -1,4 +1,4 @@
-import Foundation
+import Darwin
 
 func randomNumber(MIN: Int, MAX: Int)-> Int{
     return Int(arc4random_uniform(UInt32(MAX-MIN)) + UInt32(MIN));
